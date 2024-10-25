@@ -1,0 +1,188 @@
+body{
+  background-color:#f5f5f5 ;
+}
+
+
+
+.card {
+    border: none;
+    border-radius: 30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    transition: all ease-in-out 0.3s;
+  }
+
+.card:hover {
+    background-color: #fdfdfd;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+      rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+      rgba(0, 0, 0, 0.09) 0px 32px 16px;
+      transform: scale(1.05);
+  }
+  
+.img-fluid{
+  border-radius: 30px;
+}
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+strong .text-muted{
+  font-weight: bold;
+}
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    margin-bottom: 0.5rem;
+    color: rgb(29, 29, 29);
+  }
+
+.btn-orange{
+  background-color: #ff7000;
+  color: #f9f9f9;
+}
+
+.btn-orange:hover{
+  background-color: #f06801;
+  color: #f9f9f9;
+}
+
+.badge{
+  background-color: #fddcc3; /* Color de fondo personalizado */
+  color: #ff7000; /* Color del texto */
+  border-radius: 22px; /* Bordes redondeados */
+  font-weight: bold; /* Peso de la fuente */
+}
+
+.search-input {
+  background-color: #ffffff; /* Color de fondo personalizado */
+  border-color: #fc8a1fef; /* Color del borde personalizado */
+  border-radius: 1.75rem; /* Radio del borde personalizado */
+  padding: 0.5rem 1rem; /* Padding personalizado */
+  font-size: 1.1rem; /* Tamaño de fuente personalizado */
+}
+
+.fondo {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-image: url(../../media/header.jpg);
+  min-height: 450px;
+  background-color: #f06801;
+  -webkit-box-shadow: 0px 10px 24px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 24px 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 24px 3px rgba(0,0,0,0.3);
+}
+
+.glass{
+  backdrop-filter: blur(7px) saturate(183%);
+    -webkit-backdrop-filter: blur(7px) saturate(183%);
+    background-color: rgba(1, 1, 1, 0.26);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    border: none;
+}
+
+.fondo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: contrast(1); /* Filtro de contraste oscuro */
+  background-color: rgba(0, 0, 0, 0.5); /* Filtro oscuro */
+  z-index: 1;
+}
+
+.fondo .container {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+.footer-top {
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-bottom {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+
+footer li,
+footer p,
+footer a {
+  color: rgba(255,255,255,0.7);
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer .line {
+  width: 40px;
+  height: 4px;
+  background-color: var(--c-brand);
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 100px;
+}
+
+.whatsapp:hover,.whatsapp:active{
+  background: linear-gradient(45deg, #1EBEA5, #00E676);
+  color: #f9f9f9;
+}
+
+.instagram:hover,.instagram:active{
+  background: linear-gradient(180deg, #833ab4, #fd1d1d, #fcb045);
+  color: #f9f9f9;
+}
+.twi-x:hover,.twi-x:active{
+  background:linear-gradient(180deg,#14171a,#272c31);
+  color: #f9f9f9;
+}
+.text-orange{
+  color: #ff7000;
+}
+.c-filtro{
+  background-color: #f1f1f1;
+  border-radius: 30px;
+}
+.form-check-input:checked {
+  background-color: #ff7000; /* Cambia el color de fondo del checkbox cuando está seleccionado */
+  border-color: #ff7000c2; /* Cambia el color del borde del checkbox cuando está seleccionado */
+}
+.form-check-input:focus {
+  border-color: #ff7000;
+  outline: 0;
+  box-shadow: 0 0 0 .25rem #ff6f0057;
+}
+
+.form-check-input {
+  border-radius: 0.25rem; /* Añade bordes redondeados al checkbox */
+}
+a .orange-link{
+  color: #ff7000;
+}
+
+a{
+  color: #ff7000;
+}

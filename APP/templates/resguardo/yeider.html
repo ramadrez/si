@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Voluntarios</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lista de Voluntarios</h1>
+    <a href="{% url 'animal-list' %}">Volver a Animales</a>
+    {% if voluntarios %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Cuidador</th>
+                <th>Teléfono</th>
+                <th>Cédula</th>
+                <th>Cantidad de Perros</th>
+                <th>Cantidad de Gatos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voluntario in voluntarios %}
+            <tr>
+                <td>{{ voluntario.Cuidador.username }}</td>
+                <td>{{ voluntario.Cuidador.Telefono }}</td>
+                <td>{{ voluntario.Cuidador.Cedula }}</td>
+                <td>{{ voluntario.perros_count }}</td>
+                <td>{{ voluntario.gatos_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay voluntarios registrados en este momento.</p>
+    {% endif %}
+</body>
+
+</html>

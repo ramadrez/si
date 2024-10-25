@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Animales</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            margin: 0 10px;
+        }
+
+        .no-animals {
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="animal-list-container">
+        <h1>Albergue Digital</h1>
+
+        <form method="get" action="{% url 'animal-list' %}">
+            {{ form.as_p }}
+            <input type="text" name="query" placeholder="Buscar...">
+        </form>
+
+        <a href="{% url 'animal-create' %}">Agregar Nuevo Animal</a> |
+        <a href="{% url 'animal-list' %}">Generar reporte</a> |
+        <a href="{% url 'adoptante-list' %}">Adoptantes</a> |
+        <a href="{% url 'adopciones-list' %}">Adopciones</a> |
+        <a href="{% url 'voluntarios-list' %}">Voluntarios</a> |
+
+
+        {% if animales %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Raza</th>
+                    <th>Esterilización</th>
+                    <th>Especie</th>
+                    <th>Tamaño</th>
+                    <th>Género</th>
+                    <th>Cuidador (Cédula)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for animal in animales %}
+                <tr>
+                    <td>{{ animal.id }}</td>
+                    <td><img src="{{ animal.photo.url }}" alt="{{ animal.nom }}"></td>
+                    <td>{{ animal.nom }}</td>
+                    <td>{{ animal.edad }}</td>
+                    <td>{{ animal.raza }}</td>
+                    <td>{{ animal.fk_est }}</td>
+                    <td>{{ animal.fk_esp }}</td>
+                    <td>{{ animal.fk_tam }}</td>
+                    <td>{{ animal.fk_gen }}</td>
+                    <td>{{ animal.resguardo.first.cuidador.cedula }}</td>
+                    <td>
+                        <a href="{% url 'animal-detail' pk=animal.pk %}">Ver</a> |
+                        <a href="{% url 'animal-update' pk=animal.pk %}">Editar</a> |
+                        <form action="{% url 'animal-delete' pk=animal.pk %}" method="post"
+                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este animal?');">
+                            {% csrf_token %}
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-animals">No se encontraron animales.</div>
+        {% endif %}
+    </div>
+
+    <!-- Ventana modal de confirmación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro que deseas eliminar este animal?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Sí, eliminar</button>
+                <button id="cancelDelete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let deleteModal = document.getElementById('deleteModal');
+        let confirmDeleteButton = document.getElementById('confirmDelete');
+        let cancelDeleteButton = document.getElementById('cancelDelete');
+        let deleteForm = null;  // Formulario de eliminación
+
+        // Mostrar el modal cuando se hace clic en el botón de eliminar
+        document.querySelectorAll('form[action*="delete"]').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();  // Prevenir la acción por defecto
+                deleteForm = this;  // Guardar el formulario
+                deleteModal.style.display = 'flex';  // Mostrar el modal
+            });
+        });
+
+        // Cerrar el modal cuando se hace clic en "Cancelar"
+        cancelDeleteButton.addEventListener('click', function () {
+            deleteModal.style.display = 'none';  // Ocultar el modal
+        });
+
+        // Confirmar la eliminación
+        confirmDeleteButton.addEventListener('click', function () {
+            if (deleteForm) {
+                fetch(deleteForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': deleteForm.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: new URLSearchParams(new FormData(deleteForm))
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_url;  // Redirigir a la lista de animales
+                        } else {
+                            alert('Hubo un problema al intentar eliminar el registro.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                deleteModal.style.display = 'none';  // Ocultar el modal
+            }
+        });
+
+        // Cerrar el modal cuando se hace clic fuera del contenido
+        window.onclick = function (event) {
+            if (event.target == deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+
+</html>

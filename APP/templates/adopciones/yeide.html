@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Adopciones</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="adopcion-list-container">
+        <h1>Adopciones en Albergue Digital</h1>
+
+        <a href="{% url 'adopcion-create' %}">Agregar Nueva Adopción</a> |
+        <a href="{% url 'animal-list' %}">Volver a Animales</a>
+
+        {% if adopciones %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Adopción</th>
+                    <th>ID Animal</th>
+                    <th>Foto Animal</th>
+                    <th>Nombre Animal</th>
+                    <th>Edad Animal</th>
+                    <th>Especie Animal</th>
+                    <th>Género Animal</th>
+                    <th>Cédula Adoptante</th>
+                    <th>Nombre Adoptante</th>
+                    <th>Apellido Adoptante</th>
+                    <th>Teléfono Adoptante</th>
+                    <th>
+                        <a href="?o=Fecha">Fecha Adopción &#9650;</a> 
+                        <a href="?o=-Fecha">Fecha Adopción &#9660;</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for adopcion in adopciones %}
+                <tr>
+                    <td>{{ adopcion.id }}</td>
+                    <td>{{ adopcion.Animal.mascota.id }}</td>
+                    <td><img src="{{ adopcion.Animal.mascota.photo.url }}"
+                            alt="Foto de {{ adopcion.Animal.mascota.nom }}"></td>
+                    <td>{{ adopcion.Animal.mascota.nom }}</td>
+                    <td>{{ adopcion.Animal.mascota.edad }}</td>
+                    <td>{{ adopcion.Animal.mascota.fk_esp.especie }}</td>
+                    <td>{{ adopcion.Animal.mascota.fk_gen.gen }}</td>
+                    <td>{{ adopcion.Adoptante.ced }}</td>
+                    <td>{{ adopcion.Adoptante.name }}</td>
+                    <td>{{ adopcion.Adoptante.ape }}</td>
+                    <td>{{ adopcion.Adoptante.tlf }}</td>
+                    <td>{{ adopcion.Fecha }}</td>
+                    <td>
+                        <a href="{% url 'adopcion-detail' adopcion.pk %}">Ver</a> |
+                        <a href="{% url 'adopcion-update' adopcion.pk %}">Editar</a> |
+                        <a href="{% url 'adopciones-list' %}">Ficha</a> |
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-data-message">No se encontraron adopciones.</div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

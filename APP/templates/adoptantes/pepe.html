@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Adoptantes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            margin: 0 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="adoptante-list-container">
+        <h1>Lista de Adoptantes</h1>
+        <a href="{% url 'adoptante-create' %}">Agregar Nuevo Adoptante</a> |
+        <a href="{% url 'animal-list' %}">Volver a Animales</a>
+
+        {% if object_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Teléfono</th>
+                    <th>Foto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for adoptante in object_list %}
+                <tr>
+                    <td>{{ adoptante.ced }}</td>
+                    <td>{{ adoptante.name }}</td>
+                    <td>{{ adoptante.ape }}</td>
+                    <td>{{ adoptante.tlf }}</td>
+                    <td><img src="{{ adoptante.photo.url }}" alt="Foto de {{ adoptante.name }}"></td>
+                    <td>
+                        <a href="{% url 'adoptante-detail' adoptante.ced %}">Ver</a> |
+                        <a href="{% url 'adoptante-update' adoptante.ced %}">Editar</a> |
+                        <a href="{% url 'adoptante-delete' adoptante.ced %}" class="delete-btn">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-results">
+            No se encontraron adoptantes.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Modal para confirmar eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Eliminar</button>
+                <button id="cancelDelete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let deleteModal = document.getElementById('deleteModal');
+        let confirmDeleteButton = document.getElementById('confirmDelete');
+        let cancelDeleteButton = document.getElementById('cancelDelete');
+        let deleteForm = null;
+
+        // Manejar la eliminación con AJAX
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function (event) {
+                event.preventDefault();
+                deleteForm = this.href;
+                deleteModal.style.display = 'flex';  // Mostrar el modal
+            });
+        });
+
+        // Cerrar el modal cuando se hace clic en "Cancelar"
+        cancelDeleteButton.addEventListener('click', function () {
+            deleteModal.style.display = 'none';
+        });
+
+        // Confirmar la eliminación
+        confirmDeleteButton.addEventListener('click', function () {
+            if (deleteForm) {
+                fetch(deleteForm, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.reload();  // Recargar la página
+                        } else {
+                            alert('Hubo un problema al intentar eliminar el registro.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                deleteModal.style.display = 'none';  // Ocultar el modal
+            }
+        });
+
+        // Cerrar el modal cuando se hace clic fuera del contenido
+        window.onclick = function (event) {
+            if (event.target == deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+
+</html>

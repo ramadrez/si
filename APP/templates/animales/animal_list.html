@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albergue Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static "style.css" %}">
+</head>
+<body>
+    <!-- desarrollar aqui slider-->
+    <div class="wrapper">
+        
+        <aside id="sidebar" class="d-none d-lg-block">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button" onclick="toggleActive()">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">Patitas Junín</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="{% url 'animal-list' %}" class="sidebar-link activate-link">
+                        <i class="bi bi-house-heart-fill"></i>
+                        <span>Albergue Digital</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'adopciones-list' %}" class="sidebar-link">
+                        <i class="bi bi-clipboard-heart-fill"></i>
+                        <span>Adopciones</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item">
+                    <a href="{% url 'voluntarios-list' %}" class="sidebar-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Voluntarios</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'adoptante-list' %}" class="sidebar-link">
+                        <i class="bi bi-person-vcard-fill"></i>
+                        <span>Adoptantes</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{% url 'admin-edit' %}" class="sidebar-link">
+                        <i class="bi bi-gear-wide-connected"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Salir</span>
+                </a>
+            </div>
+        </aside>
+        <!-- final slider-->
+        <div class="main p-3">
+            <!-- desarrollar aqui navar-->
+                <nav class="navbar navbar-expand-lg navar-movil d-block d-lg-none">
+                    <div class="container-fluid">
+                    <a class="navbar-brand" href="#"></a>
+                    <button class="navbar-toggler btn-toggle " type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" >
+                        <span><i class="bi bi-list"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace activate-link" aria-current="page" href="{% url 'animal-list' %}">
+                                <i class="bi bi-house-heart-fill"></i>
+                                <span>Albergue Digital</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace" aria-current="page" href="{% url 'adopciones-list' %}">
+                                <i class="bi bi-clipboard-heart-fill"></i>
+                                <span>Adopciones</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace" aria-current="page" href="{% url 'voluntarios-list' %}">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Voluntarios</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace" aria-current="page" href="{% url 'adoptante-list' %}">
+                                <i class="bi bi-person-vcard-fill"></i>
+                                <span>Adoptantes</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace" aria-current="page" href="{% url 'admin-edit' %}">
+                                <i class="bi bi-gear-wide-connected"></i>
+                                <span>Configuración</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link movil-enlace" aria-current="page" href="#">
+                                <i class="bi bi-box-arrow-left"></i>
+                                <span>Salir</span>
+                            </a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                </nav>
+                <!-- desarrollar cierra navar-->
+            <!-- desarrollar aqui encabezado-->
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-2 col-12 text-center" >
+                        <img src="../../../media/logo-patitas.png" alt="" width="140" height="110">
+                    </div>
+                    <div class="col-12 col-md-3  text-center">
+                        <h3 class="d-inline  font-weight-bold align-items-start f-3">Albergue Digital</h3>
+                    </div>
+                    <div class="col-6 col-md-1 text-center">
+                        <div class="m-1">
+                            <p class="follower-count">{{ cantidad_gatos }}</p>
+                            <p class="d-inline follower-label">Gatos</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-1 text-center">
+                        <div class="m-1">
+                            <p class="follower-count">{{ cantidad_perros }}</p>
+                            <p class="d-inline follower-label">Perros</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5" >
+                        <form method="get" class="d-flex text-end" role="search" action="{% url 'animal-list' %}">
+                            {{ form.as_p }}
+                            <input class="form-control  search-input" type="text" name="query" placeholder="Buscar" aria-label="Search">
+                            <button class="btn orange ms-1"><i class="bi bi-search-heart"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row my-1">
+                    
+                    <div class="col-lg-6 col-md-5 col-12">
+                    </div>
+                    <div class="col-lg-6 col-md-7 col-12 text-md-end text-center my-2" >
+                        <div class="row">
+                            <div class="col-6">
+                                <form action="{% url 'generar_pdf_resguardo' %}" method="get">
+                                    <button class="orange btn "  type="submit"><i class="bi bi-file-earmark-arrow-down"></i> Reporte General</button>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <form action="{% url 'generar_pdf_sin_esterilizar' %}" method="get">
+                                    <button class="orange btn "  type="submit"><i class="bi bi-file-earmark-arrow-down"></i> No Esterilizados</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-1">
+                    <div class="col-lg-6 col-md-6 col-12 text-start">
+                                <a class="orange btn  " href="{% url 'animal-create' %}"><i class="bi bi-plus-square pl-1"></i> Agregar Animal</a>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 text-end mt-1">
+                            <button class="orange btn me-4 " type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-arrow-left-short"></i> <i class="bi bi-funnel"></i> Filtro</button>
+                    </div>
+                </div>
+                <!-- apartado filtro -->
+                <div class="row my-3 text-center collapse c-filtro" id="collapseExample">
+                    <form method="GET" action="{% url 'animal-list' %}">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-6 mt-2">
+                                <h6 class="opacity-75">Especie</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioGatos" name="especie" value="Gato"
+                                        {% if request.GET.especie == "Gato" %}checked{% endif %}>
+                                    <label class="form-check-label" for="radioGatos">Gatos</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioPerros" name="especie" value="Perro"
+                                        {% if request.GET.especie == "Perro" %}checked{% endif %}>
+                                    <label class="form-check-label" for="radioPerros">Perros</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioTodosEspecie" name="especie" value="" 
+                                        {% if not request.GET.especie %}checked{% endif %}> <!-- OJO ESTO PUEDE SER?-->
+                                    <label class="form-check-label custom-label" for="radioTodosEspecie">Todos</label>
+                                </div>                            
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-6 mt-2">
+                                <h6 class="opacity-75">Género</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioMacho" name="genero" value="Macho"
+                                        {% if request.GET.genero == "Macho" %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioMacho">Machos</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioHembra" name="genero" value="Hembra"
+                                        {% if request.GET.genero == "Hembra" %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioHembra">Hembras</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioTodosGenero" name="genero" value="" 
+                                        {% if not request.GET.genero %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioTodosGenero">Todos</label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-md-3 col-6 mt-2">
+                                <h6 class="opacity-75">Edad</h6>
+                                <a class="orange-text me-2 fs-4" href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}o=Edad"><i class="bi bi-hourglass-top orange-text"></i></a>
+                                <a class="orange-text ms- fs-4" href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}o=-Edad"><i class="bi bi-hourglass-bottom orange-text"></i></a>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-6 mt-2">
+                                <h6 class="opacity-75">Esterilizados</h6>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioSi" name="esterilizado" value="Si"
+                                        {% if request.GET.esterilizado == "Si" %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioSi">Sí</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioNo" name="esterilizado" value="No"
+                                        {% if request.GET.esterilizado == "No" %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioNo">No</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="radioTodosEsterilizado" name="esterilizado" value="" 
+                                        {% if not request.GET.esterilizado %}checked{% endif %}>
+                                    <label class="form-check-label custom-label" for="radioTodosEsterilizado">Todos</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <button type="submit" class="btn orange">Aplicar Filtros</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- apartado filtro -->
+            </div>
+            <!-- desarrollar termina encabezado-->
+
+            <!-- desarrollar aqui tabla-->
+
+            <!-- afuera del desarrollo tabla -->
+            {% if animales %}
+            <div class="container">
+                    {% for animal in animales %}
+                        <div class="card my-3 p-2 grafic">
+                            <h5 class="card-header text-center rounded-top m-0">Id Animal <strong>{{ animal.id }}</strong></h5>
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                    <img src="{{ animal.photo.url }}" class="img-fluid rounded m-1" alt="{{ animal.nom }}" width="110" height="110">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="card-body text-center p-1">
+                                            <h5 class="card-title m-0 mt-2">{{ animal.nom }}</h5>
+                                            <p class="card-text m-0"> <small class="text-muted">Fecha de Nacimiento <strong>{{ animal.edad }}</strong></small></p>
+                                            <p class="card-text m-0"><small class="text-muted">Esterilizacion <strong>{{ animal.fk_est }}</strong></small></p>
+                                            <p class="card-text m-1"><small class="badge resaltar fs-md-6 rounded-pill p-2 custom-font-size">{{ animal.fk_esp }}  |  {{ animal.raza }}  |  {{ animal.fk_tam }}  |  {{ animal.fk_gen }} </small></p>
+                                            <p class="card-text m-3"><strong class="text-muted">C.I Cuidador <small class="badge resaltar rounded-pill p-2 ms-1 custom-font-size">{{ animal.fk_user.Cedula}}</small><small class="p-1 opacity-100">{{ animal.fk_user.first_name }} {{ animal.fk_user.last_name }}</small></strong></p>
+                                        </div>
+                                    </div>
+                                        </div>
+                                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                            <div action="" class="d-flex flex-row flex-md-column">
+                                                <a class="btn  secundario_color m-1" href="{% url 'animal-update' pk=animal.pk %}"><i class="bi bi-pencil-square"></i></a>
+                                                <form action="{% url 'animal-delete' pk=animal.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn alerta_color m-1"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    {% else %}
+                        <h6 class="no-data-message text-center fs-4 align-items-center mt-2 ">No Se Encontraron Animales.</h6>
+                    {% endif %}
+                </div>
+        </div>
+        
+    </div>
+
+    <!-- Ventana modal de confirmación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content grafic">
+            <div class="text-center fs-2 mb-2"><i class="bi bi-exclamation-circle alerta-icon"></i></div>
+            <p class="text-muted m-0"><strong>¿Estás seguro que deseas eliminar este animal?</strong></p>
+            <div class="modal-buttons">
+                <button id="cancelDelete" class="btn orange-button">Cancelar</button>
+                <button id="confirmDelete" class="btn alerta_color">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let deleteModal = document.getElementById('deleteModal');
+        let confirmDeleteButton = document.getElementById('confirmDelete');
+        let cancelDeleteButton = document.getElementById('cancelDelete');
+        let deleteForm = null;  // Formulario de eliminación
+
+        // Mostrar el modal cuando se hace clic en el botón de eliminar
+        document.querySelectorAll('form[action*="delete"]').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();  // Prevenir la acción por defecto
+                deleteForm = this;  // Guardar el formulario
+                deleteModal.style.display = 'flex';  // Mostrar el modal
+            });
+        });
+
+        // Cerrar el modal cuando se hace clic en "Cancelar"
+        cancelDeleteButton.addEventListener('click', function () {
+            deleteModal.style.display = 'none';  // Ocultar el modal
+        });
+
+        // Confirmar la eliminación
+        confirmDeleteButton.addEventListener('click', function () {
+            if (deleteForm) {
+                fetch(deleteForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': deleteForm.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: new URLSearchParams(new FormData(deleteForm))
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = data.redirect_url;  // Redirigir a la lista de animales
+                        } else {
+                            alert('Hubo un problema al intentar eliminar el registro.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                deleteModal.style.display = 'none';  // Ocultar el modal
+            }
+        });
+
+        // Cerrar el modal cuando se hace clic fuera del contenido
+        window.onclick = function (event) {
+            if (event.target == deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{% static "script.js" %}"></script>
+</body>
+
+</html>
